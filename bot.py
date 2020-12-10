@@ -32,7 +32,11 @@ def getFile(bot,update):
         document.close()
     else:
         bot.send_message(chat_id=chat_id, text="File not available")
-      
+
+def start(bot,update):
+    chat_id = update.message.chat_id
+    title=update.message.from_user["first_name"]
+    bot.send_message(chat_id=chat_id, text="Hi "+str(title)+" welcome to this Bot. I am feeling great to see you here.")
     
 def main():
     updater = Updater(TOKEN)
@@ -40,6 +44,7 @@ def main():
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command,writeToCsv))
     dp.add_handler(CommandHandler("remove_file",removeFile))
     dp.add_handler(CommandHandler("get_file",getFile))
+    dp.add_handler(CommandHandler("start",start))
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
                           url_path=TOKEN)
