@@ -7,30 +7,21 @@ TOKEN='1389483954:AAEy5j55M1rQyl_NhsFzHTR0jtkVcSWI8U0'
 PORT = int(os.environ.get('PORT', 5000))
 def writeToCsv(bot,update):
     message=update.message.text
-    chat_id = update.message.chat_id
     message_list=message.split("\n")
     n=int(len(message_list)/10)
     for i in range(n):
         topic=message_list[10*i+2][7:]
         date=message_list[10*i+3][6:18]
         time=message_list[10*i+3][19:27]
-        with open("ClassTimeLine_"+str(chat_id)+".csv","a+",newline="") as file:
+        with open("ClassTimeLine.csv","a+",newline="") as file:
             writer=csv.writer(file)
             writer.writerow([date,time,topic])
-def removeFile(bot,update):
-    chat_id = update.message.chat_id
-    if os.path.exists("ClassTimeLine_"+str(chat_id)+".csv"):
-        bot.send_message(chat_id=chat_id, text="Please wait, I am removing your File")
-        os.remove("ClassTimeLine_"+str(chat_id)+".csv")
-        bot.send_message(chat_id=chat_id, text="File removed sucessfully")
-        
-    else:
-        bot.send_message(chat_id=chat_id, text="File not available")
+
 def getFile(bot,update):
     chat_id = update.message.chat_id
-    if os.path.exists("ClassTimeLine_"+str(chat_id)+".csv"):
+    if os.path.exists("ClassTimeLine.csv"):
         bot.send_message(chat_id=chat_id, text="Please wait, I am sending your File")
-        bot.send_document(chat_id=chat_id, document=open("ClassTimeLine_"+str(chat_id)+".csv", 'rb')
+        bot.send_document(chat_id=chat_id, document=open("ClassTimeLine.csv", 'rb')
 
     else:
         bot.send_message(chat_id=chat_id, text="File not available")
