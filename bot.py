@@ -21,7 +21,7 @@ def getFile(bot,update):
     chat_id = update.message.chat_id
     if os.path.exists("ClassTimeLine.csv"):
         bot.send_message(chat_id=chat_id, text="Please wait, I am sending your File")
-        bot.send_document(chat_id=chat_id, document=open("ClassTimeLine.csv", 'rb')
+        bot.send_document(chat_id=chat_id, document=open("ClassTimeLine.csv", 'rb'))
 
     else:
         bot.send_message(chat_id=chat_id, text="File not available")
@@ -35,7 +35,6 @@ def main():
     updater = Updater(TOKEN)
     dp = updater.dispatcher
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command,writeToCsv))
-    dp.add_handler(CommandHandler("remove_file",removeFile))
     dp.add_handler(CommandHandler("get_file",getFile))
     dp.add_handler(CommandHandler("start",start))
     updater.start_webhook(listen="0.0.0.0",
