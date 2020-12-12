@@ -30,7 +30,7 @@ def getFile(bot,update):
     chat_id = update.message.chat_id
     if os.path.exists("ClassTimeLine_"+str(chat_id)+".csv"):
         bot.send_message(chat_id=chat_id, text="Please wait, I am sending your File")
-        bot.send_document(chat_id=chat_id, document=open("ClassTimeLine_"+str(chat_id)+".csv", 'rb')
+        bot.send_document(chat_id=chat_id, document=open("ClassTimeLine_"+str(chat_id)+".csv", 'rb'))
 
     else:
         bot.send_message(chat_id=chat_id, text="File not available")
