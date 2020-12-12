@@ -9,12 +9,14 @@ def writeToCsv(bot,update):
     message=update.message.text
     chat_id = update.message.chat_id
     message_list=message.split("\n")
-    topic=message_list[2][7:]
-    date=message_list[3][6:18]
-    time=message_list[3][19:27]
-    with open("ClassTimeLine_"+str(chat_id)+".csv","a+",newline="") as file:
-        writer=csv.writer(file)
-        writer.writerow([date,time,topic])
+    n=int(len(message_list)/10)
+    for i in range(n):
+        topic=message_list[10*i+2][7:]
+        date=message_list[10*i+3][6:18]
+        time=message_list[10*i+3][19:27]
+        with open("ClassTimeLine_"+str(chat_id)+".csv","a+",newline="") as file:
+            writer=csv.writer(file)
+            writer.writerow([date,time,topic])
 def removeFile(bot,update):
     chat_id = update.message.chat_id
     if os.path.exists("ClassTimeLine_"+str(chat_id)+".csv"):
@@ -29,7 +31,7 @@ def getFile(bot,update):
     if os.path.exists("ClassTimeLine_"+str(chat_id)+".csv"):
         bot.send_message(chat_id=chat_id, text="Please wait, I am sending your File")
         bot.send_document(chat_id=chat_id, document=open("ClassTimeLine_"+str(chat_id)+".csv", 'rb'))
-        document.close()
+
     else:
         bot.send_message(chat_id=chat_id, text="File not available")
 
